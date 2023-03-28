@@ -36,7 +36,7 @@ app.get(
 	})
 );
 app.get(
-	'/api/v1/auth/google/callback',
+	'/auth/google/callback',
 	passport.authenticate('google', {
 		failureMessage: 'Can not login to Google, please try again later!',
 		failureRedirect: errorLoginUrl,
