@@ -185,7 +185,8 @@ const login = async (req, res, next) => {
 		} else {
 			return res.status(200).json({
 				status: 'fail',
-				message: 'Tài khoản đã tồn tại',
+				message:
+					'Tài khoản đã được đăng ký, vui lòng đăng nhập bằng Google!',
 			});
 		}
 	} catch (error) {
