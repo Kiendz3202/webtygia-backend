@@ -57,7 +57,7 @@ const register = async (req, res, next) => {
 			token: crypto.randomBytes(32).toString('hex'),
 		}).save();
 		const url = `http://localhost:3000/authentication/verify-token-email?userid=${user._id}&token=${token.token}`;
-		sendEmail(user.email, 'Verify email', url);
+		sendEmail(user.email, 'Xác thực Email', url);
 
 		// return res.status(200).json({
 		// 	status: 'ok',

@@ -1,23 +1,57 @@
+const { google } = require('googleapis');
 const nodemailer = require('nodemailer');
+require('dotenv').config();
+
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = process.env.REDIRECT_URI;
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 
 module.exports = async (email, subject, text) => {
 	try {
+		// const transporter = nodemailer.createTransport({
+		// 	host: process.env.HOST,
+		// 	service: process.env.SERVICE,
+		// 	port: Number(process.env.EMAIL_PORT),
+		// 	secure: Boolean(process.env.SECURE),
+		// 	auth: {
+		// 		user: process.env.USER,
+		// 		pass: process.env.PASS,
+		// 	},
+		// 	tls: {
+		// 		ciphers: 'SSLv3',
+		// 	},
+		// });
+
+		// await transporter.sendMail({
+		// 	from: process.env.USER,
+		// 	to: email,
+		// 	subject: subject,
+		// 	text: text,
+		// });
+
+		const oAuth2Client = new google.auth.OAuth2(
+			CLIENT_ID,
+			CLIENT_SECRET,
+			REDIRECT_URI
+		);
+		oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+		const accessToken = await oAuth2Client.getAccessToken();
 		const transporter = nodemailer.createTransport({
-			host: process.env.HOST,
-			service: process.env.SERVICE,
-			port: Number(process.env.EMAIL_PORT),
-			secure: Boolean(process.env.SECURE),
+			service: 'gmail',
 			auth: {
+				type: 'OAuth2',
 				user: process.env.USER,
-				pass: process.env.PASS,
-			},
-			tls: {
-				ciphers: 'SSLv3',
+				clientId: CLIENT_ID,
+				clientSecret: CLIENT_SECRET,
+				refreshToken: REFRESH_TOKEN,
+				accessToken: accessToken,
 			},
 		});
 
-		await transporter.sendMail({
-			from: process.env.USER,
+		const info = await transporter.sendMail({
+			from: `"Web tỷ giá" <${process.env.USER}`,
 			to: email,
 			subject: subject,
 			text: text,
