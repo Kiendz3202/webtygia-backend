@@ -29,7 +29,7 @@ const { isUserAuthenticated } = require('./middlewares/auth/auth');
 const successLoginUrl = 'http://localhost:3000/authentication/success';
 const errorLoginUrl = 'http://localhost:3000/authentication/error';
 app.get(
-	'/api/v1/auth/google',
+	'/auth/google',
 	passport.authenticate('google', {
 		scope: ['profile', 'email'],
 		session: false,
