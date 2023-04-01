@@ -40,6 +40,11 @@ module.exports = async (email, subject, text) => {
 		const accessToken = await oAuth2Client.getAccessToken();
 		const transporter = nodemailer.createTransport({
 			service: 'gmail',
+			secure: true,
+			tls: {
+				// must provide server name, otherwise TLS certificate check will fail
+				servername: 'tygia.ansecurity.net',
+			},
 			auth: {
 				type: 'OAuth2',
 				user: process.env.USER,
