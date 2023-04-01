@@ -5,6 +5,7 @@ const {
 	refreshtoken,
 	logout,
 	updateTokenDeviceLoginGoogle,
+	loginByGoogleForMobile,
 } = require('../../controllers/auth/authControllers');
 // import middleware
 const express = require('express');
@@ -46,6 +47,7 @@ app.post(`/login`, upload.single('avatar'), login);
 app.post(`/logout`, upload.single('avatart'), logout);
 app.post(`/update-token-device-login-google`, updateTokenDeviceLoginGoogle);
 app.get('/:id/verify/:token', verifyEmail);
+app.post('/login/mobile', loginByGoogleForMobile);
 
 module.exports = app;
 

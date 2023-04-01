@@ -194,6 +194,80 @@ const login = async (req, res, next) => {
 	}
 };
 
+const loginByGoogleForMobile = async (req, res, next) => {
+	try {
+		const { email, googleId, avatar, givenName } = req.body;
+
+		// Check if google profile exist.
+		if (googleId && email) {
+			// googleId: profile.id;
+			await User.findOne({ email })
+				.then(async (existingUser) => {
+					if (existingUser) {
+						await User.findOneAndUpdate({ email }, { googleId })
+							.then(async (user) => {
+								//create access token
+								const accessToken = await signAccessToken(
+									user._id
+								);
+								res.status(200).json({
+									status: 'ok',
+									data: {
+										accessToken,
+										// refreshtoken,
+										user: {
+											_id: user._id,
+											name: user.name,
+											avatar: user.avatar,
+											email: user.email,
+										},
+									},
+								});
+							})
+							.catch((err) => next(err));
+					} else {
+						new User({
+							googleId,
+							email,
+							avatar,
+							name: givenName,
+						})
+							.save()
+							.then(async (user) => {
+								//create access token
+								const accessToken = await signAccessToken(
+									user._id
+								);
+								res.status(200).json({
+									status: 'ok',
+									data: {
+										accessToken,
+										// refreshtoken,
+										user: {
+											_id: user._id,
+											name: user.name,
+											avatar: user.avatar,
+											email: user.email,
+										},
+									},
+								});
+							})
+							.catch((err) => next(err));
+					}
+				})
+				.catch((err) => next(err));
+		} else {
+			return res.status(200).json({
+				status: 'fail',
+				message:
+					'Không nhận được GoogleID hoặc Email, vui lòng thử lại!',
+			});
+		}
+	} catch (error) {
+		next(error);
+	}
+};
+
 const refreshtoken = async (req, res, next) => {
 	try {
 		const { refreshtoken } = req.body;
@@ -299,4 +373,5 @@ module.exports = {
 	refreshtoken,
 	logout,
 	updateTokenDeviceLoginGoogle,
+	loginByGoogleForMobile,
 };
