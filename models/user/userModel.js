@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema({
 		// required: true,
 	},
 	isVerified: { type: Boolean, default: false },
-	authorization: { type: 'String', default: 'user' },
+	role: { type: 'String', default: 'user' },
 	followNews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'News' }],
 	followCoins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Coin' }],
 	followStocks: [

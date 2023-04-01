@@ -7,7 +7,8 @@ passport.use(
 		{
 			clientID: process.env.GOOGLE_CLIENT_ID,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-			callbackURL: 'https://tygia.ansecurity.net/auth/google/callback',
+			// callbackURL: 'https://tygia.ansecurity.net/auth/google/callback',
+			callbackURL: 'http://localhost:5000/auth/google/callback',
 			// passReqToCallback: true,
 		},
 		async (accessToken, refreshToken, profile, done) => {
