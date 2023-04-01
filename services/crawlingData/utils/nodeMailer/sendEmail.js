@@ -29,7 +29,7 @@ module.exports = async (email, subject, text) => {
 		// 	subject: subject,
 		// 	text: text,
 		// });
-
+		//================================================================
 		const oAuth2Client = new google.auth.OAuth2(
 			CLIENT_ID,
 			CLIENT_SECRET,
@@ -50,12 +50,46 @@ module.exports = async (email, subject, text) => {
 			},
 		});
 
-		const info = await transporter.sendMail({
-			from: `"Web tỷ giá" <${process.env.USER}`,
-			to: email,
-			subject: subject,
-			text: text,
+		await new Promise((resolve, reject) => {
+			// verify connection configuration
+			transporter.verify(function (error, success) {
+				if (error) {
+					console.log(error);
+					reject(error);
+				} else {
+					console.log('Server is ready to take our messages');
+					resolve(success);
+				}
+			});
 		});
+
+		await new Promise((resolve, reject) => {
+			// send mail
+			transporter.sendMail(
+				{
+					from: `"Web tỷ giá" <${process.env.USER}`,
+					to: email,
+					subject: subject,
+					text: text,
+				},
+				(err, info) => {
+					if (err) {
+						console.error(err);
+						reject(err);
+					} else {
+						console.log(info);
+						resolve(info);
+					}
+				}
+			);
+		});
+
+		// const info = await transporter.sendMail({
+		// 	from: `"Web tỷ giá" <${process.env.USER}`,
+		// 	to: email,
+		// 	subject: subject,
+		// 	text: text,
+		// });
 	} catch (error) {
 		console.log('Email not sent');
 		console.log(error);
