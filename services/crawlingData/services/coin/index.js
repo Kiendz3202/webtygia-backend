@@ -44,8 +44,8 @@ const startCrawlCoinListAndChart = async () => {
 		console.log(listCoinCurrent.length);
 		console.log(allCoinListUpdate.length);
 
-		const coinNeedRemove = listCoinCurrent.filter(
-			(coin) => !allCoinListUpdate.find(({ id }) => coin.nameId == id)
+		const coinNeedRemove = listCoinCurrent?.filter(
+			(coin) => !allCoinListUpdate?.find(({ id }) => coin.nameId == id)
 		);
 		console.log('coinlist need remove');
 		let countNeedRemove = 0;

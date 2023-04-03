@@ -12,9 +12,9 @@ module.exports = async function () {
 	// cron.schedule('0 */8 * * *', async () => {
 	startCrawlCoinListAndChart();
 	// });
-	cron.schedule('*/5 * * * *', async () => {
-		updateCoinListAndChartTimeframe5Minute();
-	});
+	// cron.schedule('*/5 * * * *', async () => {
+	// 	updateCoinListAndChartTimeframe5Minute();
+	// });
 	cron.schedule('0 * * * *', async () => {
 		updateCoinListAndChartTimeframe1Hour();
 	});
