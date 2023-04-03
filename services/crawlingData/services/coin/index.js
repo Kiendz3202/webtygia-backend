@@ -33,11 +33,11 @@ const startCrawlCoinListAndChart = async () => {
 	let allCoinListUpdate = [];
 	for (const page of arr) {
 		const coinListUpdate = await crawlCoinList(200, page); //200 coins/ 1api call
-		await delay(20000);
+		await delay(30000);
 		allCoinListUpdate = allCoinListUpdate.concat(coinListUpdate);
 	}
 
-	await delay(20000); //40000
+	await delay(30000); //40000
 	//remove and upsert when update Coin(when Coin is not empty)
 	if (initialCoin.length) {
 		const listCoinCurrent = await Coin.find({});
@@ -100,15 +100,15 @@ const startCrawlCoinListAndChart = async () => {
 
 		for (const coin of currentCoin) {
 			crawlCoinDescription(coin);
-			await delay(20000);
+			await delay(30000);
 			crawlCoinDescriptionTranslateToVN(coin);
-			await delay(20000);
+			await delay(30000);
 			crawlCoinChart90D(coin);
-			await delay(20000);
+			await delay(30000);
 			crawlCoinChartMax(coin);
-			await delay(20000);
+			await delay(30000);
 			crawlCoinChart1D(coin);
-			await delay(20000);
+			await delay(30000);
 		}
 		console.log('end coinChartIsEmty');
 	} else {
@@ -128,14 +128,14 @@ const startCrawlCoinListAndChart = async () => {
 		for (const coin of coinChartNeedupdate) {
 			countNeedUpdate++;
 			crawlCoinDescription(coin);
-			await delay(20000);
+			await delay(30000);
 			crawlCoinDescriptionTranslateToVN(coin);
 			crawlCoinChart90D(coin);
-			await delay(20000);
+			await delay(30000);
 			crawlCoinChartMax(coin);
-			await delay(20000);
+			await delay(30000);
 			crawlCoinChart1D(coin);
-			await delay(20000);
+			await delay(30000);
 		}
 		console.log(countNeedUpdate);
 		console.log('end coin need update');
