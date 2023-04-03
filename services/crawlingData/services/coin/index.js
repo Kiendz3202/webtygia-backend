@@ -33,7 +33,7 @@ const startCrawlCoinListAndChart = async () => {
 	let allCoinListUpdate = [];
 	for (const page of arr) {
 		const coinListUpdate = await crawlCoinList(200, page); //200 coins/ 1api call
-		await delay(10000);
+		await delay(20000);
 		allCoinListUpdate = allCoinListUpdate.concat(coinListUpdate);
 	}
 
@@ -100,14 +100,15 @@ const startCrawlCoinListAndChart = async () => {
 
 		for (const coin of currentCoin) {
 			crawlCoinDescription(coin);
-			await delay(10000);
+			await delay(20000);
 			crawlCoinDescriptionTranslateToVN(coin);
+			await delay(20000);
 			crawlCoinChart90D(coin);
-			await delay(10000);
+			await delay(20000);
 			crawlCoinChartMax(coin);
-			await delay(10000);
+			await delay(20000);
 			crawlCoinChart1D(coin);
-			await delay(10000);
+			await delay(20000);
 		}
 		console.log('end coinChartIsEmty');
 	} else {
@@ -127,14 +128,14 @@ const startCrawlCoinListAndChart = async () => {
 		for (const coin of coinChartNeedupdate) {
 			countNeedUpdate++;
 			crawlCoinDescription(coin);
-			await delay(10000);
+			await delay(20000);
 			crawlCoinDescriptionTranslateToVN(coin);
 			crawlCoinChart90D(coin);
-			await delay(10000);
+			await delay(20000);
 			crawlCoinChartMax(coin);
-			await delay(10000);
+			await delay(20000);
 			crawlCoinChart1D(coin);
-			await delay(10000);
+			await delay(20000);
 		}
 		console.log(countNeedUpdate);
 		console.log('end coin need update');
