@@ -18,7 +18,7 @@ const crawlCoinList = async (per_page, page) => {
 			// 	//update
 			// 	updateCoinList(coin, Coin);
 			// });
-			console.log(response);
+
 			for (const coin of response.data) {
 				updateCoinList(coin, Coin);
 			}
@@ -32,7 +32,6 @@ const crawlCoinList = async (per_page, page) => {
 					err.message +
 					' crawl list coin'
 			);
-			console.log(err);
 		});
 	return data;
 };
