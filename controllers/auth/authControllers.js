@@ -77,7 +77,10 @@ const verifyEmail = async (req, res, next) => {
 		if (!user)
 			return res
 				.status(200)
-				.send({ status: 'fail', message: 'Invalid link' });
+				.send({
+					status: 'fail',
+					message: 'Đăng ký không thành công. Vui lòng thử lại!',
+				});
 
 		const token = await TokenVerifyEmail.findOne({
 			userId: user._id,
@@ -87,14 +90,17 @@ const verifyEmail = async (req, res, next) => {
 		if (!token)
 			return res
 				.status(200)
-				.send({ status: 'fail', message: 'Invalid link' });
+				.send({
+					status: 'fail',
+					message: 'Xác thực không thành công. Vui lòng thử lại!',
+				});
 
 		await User.findOneAndUpdate({ _id: user._id }, { isVerified: true });
 		await token.remove();
 
 		res.status(200).send({
 			status: 'ok',
-			message: ' Email verified successfully',
+			message: 'Xác thực thành công!',
 		});
 	} catch (error) {
 		res.status(500).send({ status: 'fail', message: error.message });
