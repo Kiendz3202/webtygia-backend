@@ -84,11 +84,11 @@ require('./services/crawlingData/scripts/stock')();
 // crawlCoinDescriptionTranslateToVN({ nameId: 'compound-governance-token' });
 // crawlCoinDescriptionTranslateToVN({ nameId: 'nervos-network' });
 // crawlCoinDescriptionTranslateToVN({ nameId: 'ssv-network' });
-const {
-	crawlSjcChart,
-	crawlSjc,
-} = require('./services/crawlingData/services/gold/crawlGold');
-crawlSjc();
+// const {
+// 	crawlSjcChart,
+// 	crawlSjc,
+// } = require('./services/crawlingData/services/gold/crawlGold');
+// crawlSjc();
 // const {
 // 	upsertAllChartSjc,
 // 	updateSjcChart1y,
