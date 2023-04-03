@@ -30,58 +30,73 @@ module.exports = async (email, subject, text) => {
 		// 	text: text,
 		// });
 		//================================================================
-		const oAuth2Client = new google.auth.OAuth2(
-			CLIENT_ID,
-			CLIENT_SECRET,
-			REDIRECT_URI
-		);
-		oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+		// const oAuth2Client = new google.auth.OAuth2(
+		// 	CLIENT_ID,
+		// 	CLIENT_SECRET,
+		// 	REDIRECT_URI
+		// );
+		// oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
-		const accessToken = await oAuth2Client.getAccessToken();
+		// const accessToken = await oAuth2Client.getAccessToken();
+		// const transporter = nodemailer.createTransport({
+		// 	service: 'gmail',
+		// 	auth: {
+		// 		type: 'OAuth2',
+		// 		user: process.env.USER,
+		// 		clientId: CLIENT_ID,
+		// 		clientSecret: CLIENT_SECRET,
+		// 		refreshToken: REFRESH_TOKEN,
+		// 		accessToken: accessToken,
+		// 	},
+		// });
+
+		// await new Promise((resolve, reject) => {
+		// 	// verify connection configuration
+		// 	transporter.verify(function (error, success) {
+		// 		if (error) {
+		// 			console.log(error);
+		// 			reject(error);
+		// 		} else {
+		// 			console.log('Server is ready to take our messages');
+		// 			resolve(success);
+		// 		}
+		// 	});
+		// });
+
+		// await new Promise((resolve, reject) => {
+		// 	// send mail
+		// 	transporter.sendMail(
+		// 		{
+		// 			from: `"Web tỷ giá" <${process.env.USER}`,
+		// 			to: email,
+		// 			subject: subject,
+		// 			text: text,
+		// 		},
+		// 		(err, info) => {
+		// 			if (err) {
+		// 				console.error(err);
+		// 				reject(err);
+		// 			} else {
+		// 				console.log(info);
+		// 				resolve(info);
+		// 			}
+		// 		}
+		// 	);
+		// });
+		//===============================================
 		const transporter = nodemailer.createTransport({
 			service: 'gmail',
 			auth: {
-				type: 'OAuth2',
-				user: process.env.USER,
-				clientId: CLIENT_ID,
-				clientSecret: CLIENT_SECRET,
-				refreshToken: REFRESH_TOKEN,
-				accessToken: accessToken,
+				user: 'kiennguyenmanhtest3202@gmail.com',
+				pass: 'rlswwlxdcwziindk',
 			},
 		});
 
-		await new Promise((resolve, reject) => {
-			// verify connection configuration
-			transporter.verify(function (error, success) {
-				if (error) {
-					console.log(error);
-					reject(error);
-				} else {
-					console.log('Server is ready to take our messages');
-					resolve(success);
-				}
-			});
-		});
-
-		await new Promise((resolve, reject) => {
-			// send mail
-			transporter.sendMail(
-				{
-					from: `"Web tỷ giá" <${process.env.USER}`,
-					to: email,
-					subject: subject,
-					text: text,
-				},
-				(err, info) => {
-					if (err) {
-						console.error(err);
-						reject(err);
-					} else {
-						console.log(info);
-						resolve(info);
-					}
-				}
-			);
+		await transporter.sendMail({
+			from: process.env.USER,
+			to: email,
+			subject: subject,
+			text: text,
 		});
 	} catch (error) {
 		console.log('Email not sent');
