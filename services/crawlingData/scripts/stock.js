@@ -21,10 +21,10 @@ module.exports = async function () {
 	// });
 	//0 4 * * 1-5
 	// cron.schedule('0 4,11,16 * * *', async () => {
-	// updateAllChartStocks();
+	updateAllChartStocks();
 	// });
 	// cron.schedule('0 16 * * *', async () => {
-	// 	updateAllDescriptionStocks();
+	updateAllDescriptionStocks();
 	// });
 	//0 9-15 * * 1-5
 	cron.schedule('0 9-15 * * *', async () => {
