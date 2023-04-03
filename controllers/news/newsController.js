@@ -21,7 +21,7 @@ const getLatestPosts = async (req, res, next) => {
 	try {
 		const allPost = await News.find()
 			.sort({ timeUpdate: -1 })
-			.limit(4)
+			.limit(6)
 			.select(' -createdAt -updatedAt -__v');
 
 		res.status(200).json({
