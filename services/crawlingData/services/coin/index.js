@@ -33,7 +33,7 @@ const startCrawlCoinListAndChart = async () => {
 	let allCoinListUpdate = [];
 	for (const page of arr) {
 		const coinListUpdate = await crawlCoinList(200, page); //200 coins/ 1api call
-		await delay(2000);
+		await delay(10000);
 		allCoinListUpdate = allCoinListUpdate.concat(coinListUpdate);
 	}
 
@@ -45,7 +45,8 @@ const startCrawlCoinListAndChart = async () => {
 		console.log(allCoinListUpdate.length);
 
 		const coinNeedRemove = listCoinCurrent?.filter(
-			(coin) => !allCoinListUpdate?.find(({ id }) => coin.nameId == id)
+			(coin) =>
+				!allCoinListUpdate?.find((item) => coin.nameId == item?.id)
 		);
 		console.log('coinlist need remove');
 		let countNeedRemove = 0;
