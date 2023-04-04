@@ -26,8 +26,8 @@ const passport = require('passport');
 
 const { signAccessToken } = require('./helpers/jwt/jwt_service');
 const { isUserAuthenticated } = require('./middlewares/auth/auth');
-const successLoginUrl = 'http://localhost:3000/authentication/success';
-const errorLoginUrl = 'http://localhost:3000/authentication/error';
+const successLoginUrl = `${process.env.URL_FE}/authentication/success`;
+const errorLoginUrl = `${process.env.URL_FE}/authentication/error`;
 app.get(
 	'/auth/google',
 	passport.authenticate('google', {
@@ -56,7 +56,7 @@ app.get(
 
 		// return res.status(200).json({ token, user });
 		res.redirect(
-			`${process.env.URL_FE}/authentication/success?email=${user.email}&name=${user.name}&avatar=${user.avatar}&token=${token}&role=${user.role}`
+			`http://localhost:3000/authentication/success?email=${user.email}&name=${user.name}&avatar=${user.avatar}&token=${token}&role=${user.role}`
 		);
 	}
 );
@@ -75,9 +75,25 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //=========Run script=============
+
+// Crawling data
 require('./services/crawlingData/scripts/coin')();
 require('./services/crawlingData/scripts/GoldPetrolExchangerateInterestRate')();
 require('./services/crawlingData/scripts/stock')();
+
+// Update point for userinterest
+// require('./services/rankingUserInterest/script/index')();
+
+// =======test==========
+const {
+	foreignCurrencyRunAll,
+	UpsertAllChartUsdVietcombank,
+} = require('./services/crawlingData/services/foreignCurrency/index');
+// foreignCurrencyRunAll();
+const {
+	upsertAllChartSjc,
+} = require('./services/crawlingData/services/gold/index');
+// upsertAllChartSjc();
 // const {
 // 	crawlCoinDescriptionTranslateToVN,
 // } = require('./services/crawlingData/services/coin/crawlCoinDescription');
@@ -109,7 +125,7 @@ require('./services/crawlingData/scripts/stock')();
 // } = require('./services/crawlingData/services/petrol/index');
 // // updatePetrolimexChart1y();
 
-//listen price change  and notificate user
+//=====listen price change  and notificate user=======
 // require('./services/notification/scripts/listenAndSendNotification')();
 //=====================
 

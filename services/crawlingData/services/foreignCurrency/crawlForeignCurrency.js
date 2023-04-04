@@ -17,6 +17,7 @@ const crawlForeignCurrency = async (url) => {
 		let arr = [];
 
 		let usdElements = document.querySelectorAll('#bang_gia tbody tr');
+		// console.log(usdElements);
 
 		usdElements.forEach((item) => {
 			let dataJson = {};
@@ -49,12 +50,13 @@ const crawlForeignCurrency = async (url) => {
 	//retry request until it gets data or tries 3 times
 	while (data == false && attemps < 2) {
 		data = await crawlDataByPuppeteer(
-			URL_EXCHANGE_RATE_VIETCOMBANK,
+			// URL_EXCHANGE_RATE_VIETCOMBANK,
+			url,
 			pageEvaluateFunc
 		);
 		// console.log(data.length);
 		attemps++;
-
+		// console.log(data);
 		if (data) {
 			const timeUpdate = Math.floor(Date.now() / 1000);
 
