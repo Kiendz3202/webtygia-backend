@@ -13,13 +13,22 @@ const {
 	updateCoinDescription,
 	updateCoinDescriptionTranslateToVN,
 } = require('../../helpers/updateDataToDb/coin/updateCoinToDb');
+const {
+	translateByGoogleApi,
+} = require('../../../../utils/translate/translateByGoogleAPI');
 
 const crawlCoinDescription = async (coin) => {
 	axios
 		.get(getCoinDescription(coin.nameId))
-		.then((response) => {
+		.then(async (response) => {
 			const data = response.data;
+			const translatedDes = await translateByGoogleApi(
+				'en',
+				'vi',
+				data.description
+			);
 
+			data.description = translatedDes;
 			// updateCoinChart(coin, data, CoinChart1D);
 			updateCoinDescription(data, CoinDescription);
 		})
