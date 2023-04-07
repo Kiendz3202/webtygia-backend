@@ -33,7 +33,7 @@ const updatePetrolimexChart1y = async () => {
 		dataJson.name = 'Petrolimex';
 
 		let date = new Date();
-		dataJson.timeUpdate = Math.floor(Date.now() / 1000);
+		dataJson.timeUpdate = Math.floor(Date.now());
 
 		dataJson.ron95III_1 = $(
 			'#myTabletoday tbody :nth-child(4) td:nth-child(2)'
@@ -85,7 +85,7 @@ const updatePetrolimexChartMax = async () => {
 		dataJson.name = 'Petrolimex';
 
 		let date = new Date();
-		dataJson.timeUpdate = Math.floor(Date.now() / 1000);
+		dataJson.timeUpdate = Math.floor(Date.now());
 
 		dataJson.ron95III_1 = $(
 			'#myTabletoday tbody :nth-child(4) td:nth-child(2)'

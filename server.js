@@ -56,7 +56,7 @@ app.get(
 
 		// return res.status(200).json({ token, user });
 		res.redirect(
-			`http://localhost:3000/authentication/success?email=${user.email}&name=${user.name}&avatar=${user.avatar}&token=${token}&role=${user.role}`
+			`${process.env.URL_FE}/authentication/success?email=${user.email}&name=${user.name}&avatar=${user.avatar}&token=${token}&role=${user.role}`
 		);
 	}
 );
@@ -94,6 +94,10 @@ const {
 	upsertAllChartSjc,
 } = require('./services/crawlingData/services/gold/index');
 // upsertAllChartSjc();
+const {
+	upsertAllChartPetrolimex,
+} = require('./services/crawlingData/services/petrol/index');
+// upsertAllChartPetrolimex();
 // const {
 // 	crawlCoinDescriptionTranslateToVN,
 // } = require('./services/crawlingData/services/coin/crawlCoinDescription');

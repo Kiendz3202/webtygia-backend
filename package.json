@@ -30,7 +30,8 @@
 		"passport": "^0.6.0",
 		"passport-google-oauth20": "^2.0.0",
 		"puppeteer": "^15.5.0",
-		"socket.io": "^4.5.1"
+		"socket.io": "^4.5.1",
+		"translate-google": "^1.5.0"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",

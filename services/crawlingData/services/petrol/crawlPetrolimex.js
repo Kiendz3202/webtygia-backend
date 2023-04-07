@@ -25,7 +25,7 @@ const crawlPetrolimex = async () => {
 		dataJson.name = 'Petrolimex';
 
 		let date = new Date();
-		dataJson.timeUpdate = Math.floor(Date.now() / 1000);
+		dataJson.timeUpdate = Math.floor(Date.now());
 
 		dataJson.ron95v_1 = $(
 			'#myTabletoday tbody :nth-child(7) td:nth-child(2)'
@@ -175,6 +175,17 @@ const crawlPetrolimexChart = async () => {
 		{ c: 22150.0, t: '2023-01-09T00:00:00' },
 		{ c: 22150.0, t: '2023-01-16T00:00:00' },
 		{ c: 22150.0, t: '2023-01-23T00:00:00' },
+
+		{ c: 23140.0, t: '2023-01-30T00:00:00' },
+		{ c: 23140.0, t: '2023-02-06T00:00:00' },
+		{ c: 23760.0, t: '2023-02-13T00:00:00' },
+		{ c: 23440.0, t: '2023-02-20T00:00:00' },
+		{ c: 23320.0, t: '2023-02-27T00:00:00' },
+		{ c: 23320.0, t: '2023-03-06T00:00:00' },
+		{ c: 23810.0, t: '2023-03-13T00:00:00' },
+		{ c: 23030.0, t: '2023-03-20T00:00:00' },
+		{ c: 23030.0, t: '2023-03-27T00:00:00' },
+		{ c: 23120.0, t: '2023-04-03T00:00:00' },
 	];
 	const arrMax = [
 		{ c: 18790.0, t: '2017-01-01T00:00:00' },
@@ -214,6 +225,7 @@ const crawlPetrolimexChart = async () => {
 		{ c: 22340.0, t: '2022-09-01T00:00:00' },
 		{ c: 20700.0, t: '2022-11-01T00:00:00' },
 		{ c: 22150.0, t: '2023-01-01T00:00:00' },
+		{ c: 23120.0, t: '2023-03-01T00:00:00' },
 	];
 	let price1year = [];
 	let time1year = [];
@@ -223,7 +235,7 @@ const crawlPetrolimexChart = async () => {
 
 	for (let item of arr1year) {
 		const date = new Date(item.t);
-		const timestamp = Math.floor(date.getTime() / 1000);
+		const timestamp = Math.floor(date.getTime());
 
 		price1year.push(item.c);
 		time1year.push(timestamp);
@@ -231,7 +243,7 @@ const crawlPetrolimexChart = async () => {
 
 	for (let item of arrMax) {
 		const date = new Date(item.t);
-		const timestamp = Math.floor(date.getTime() / 1000);
+		const timestamp = Math.floor(date.getTime());
 
 		priceMax.push(item.c);
 		timeMax.push(timestamp);
