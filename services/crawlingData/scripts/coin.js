@@ -13,13 +13,13 @@ module.exports = async function () {
 	// cron.schedule('0 0 * * *', async () => {
 	startCrawlCoinListAndChart();
 	// });
-	// cron.schedule('*/5 * * * *', async () => {
-	// 	updateCoinListAndChartTimeframe5Minute();
-	// });
-	// cron.schedule('0 * * * *', async () => {
-	// 	updateCoinListAndChartTimeframe1Hour();
-	// });
-	// cron.schedule('0 7 * * *', async () => {
-	// 	updateCoinListAndChartTimeframe1Day();
-	// });
+	cron.schedule('*/5 * * * *', async () => {
+		updateCoinListAndChartTimeframe5Minute();
+	});
+	cron.schedule('0 * * * *', async () => {
+		updateCoinListAndChartTimeframe1Hour();
+	});
+	cron.schedule('0 7 * * *', async () => {
+		updateCoinListAndChartTimeframe1Day();
+	});
 };

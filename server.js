@@ -119,7 +119,7 @@ const testFunc = async () => {
 	}
 	console.log('done');
 };
-testFunc();
+// testFunc();
 // const {
 // 	crawlCoinDescriptionTranslateToVN,
 // } = require('./services/crawlingData/services/coin/crawlCoinDescription');
