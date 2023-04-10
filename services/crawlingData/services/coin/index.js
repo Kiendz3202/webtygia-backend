@@ -100,8 +100,8 @@ const startCrawlCoinListAndChart = async () => {
 
 		for (const coin of currentCoin) {
 			crawlCoinDescription(coin);
-			await delay(30000);
-			crawlCoinDescriptionTranslateToVN(coin);
+			// await delay(30000);
+			// crawlCoinDescriptionTranslateToVN(coin);
 			await delay(30000);
 			crawlCoinChart90D(coin);
 			await delay(30000);

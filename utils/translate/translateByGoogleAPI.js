@@ -13,7 +13,6 @@ const translateByGoogleApi = async (from, to, content) => {
 			uploadErrorToDb(err?.message);
 		});
 	let finalContent = '';
-
 	res?.sentences.map((item) => {
 		finalContent += item.trans;
 	});

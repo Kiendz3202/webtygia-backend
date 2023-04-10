@@ -90,6 +90,7 @@ const {
 	UpsertAllChartUsdVietcombank,
 } = require('./services/crawlingData/services/foreignCurrency/index');
 // foreignCurrencyRunAll();
+// UpsertAllChartUsdVietcombank();
 const {
 	upsertAllChartSjc,
 } = require('./services/crawlingData/services/gold/index');
@@ -120,6 +121,10 @@ const testFunc = async () => {
 	console.log('done');
 };
 // testFunc();
+const {
+	crawlCoinDescription,
+} = require('./services/crawlingData/services/coin/crawlCoinDescription');
+// crawlCoinDescription({ nameId: 'bitcoin' });
 // const {
 // 	crawlCoinDescriptionTranslateToVN,
 // } = require('./services/crawlingData/services/coin/crawlCoinDescription');

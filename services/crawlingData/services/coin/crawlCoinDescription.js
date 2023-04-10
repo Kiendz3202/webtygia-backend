@@ -25,11 +25,12 @@ const crawlCoinDescription = async (coin) => {
 			const translatedDes = await translateByGoogleApi(
 				'en',
 				'vi',
-				data.description
+				data.description.en
 			);
 
-			data.description = translatedDes;
+			data.description.en = translatedDes;
 			// updateCoinChart(coin, data, CoinChart1D);
+			console.log(data);
 			updateCoinDescription(data, CoinDescription);
 		})
 		.catch((err) => {
