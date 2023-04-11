@@ -30,7 +30,7 @@ const crawlCoinDescription = async (coin) => {
 
 			data.description.en = translatedDes;
 			// updateCoinChart(coin, data, CoinChart1D);
-			console.log(data);
+			// console.log(data);
 			updateCoinDescription(data, CoinDescription);
 		})
 		.catch((err) => {

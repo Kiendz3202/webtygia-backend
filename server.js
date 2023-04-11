@@ -125,6 +125,10 @@ const {
 	crawlCoinDescription,
 } = require('./services/crawlingData/services/coin/crawlCoinDescription');
 // crawlCoinDescription({ nameId: 'bitcoin' });
+const {
+	updatePetrolimexChart1y,
+} = require('./services/crawlingData/services/petrol/index');
+// updatePetrolimexChart1y();
 // const {
 // 	crawlCoinDescriptionTranslateToVN,
 // } = require('./services/crawlingData/services/coin/crawlCoinDescription');

@@ -35,11 +35,10 @@ const updatePetrolimexChart1y = async () => {
 		let date = new Date();
 		dataJson.timeUpdate = Math.floor(Date.now());
 
-		dataJson.ron95III_1 = $(
-			'#myTabletoday tbody :nth-child(4) td:nth-child(2)'
-		)
-			.text()
-			.slice(1, -1);
+		dataJson.ron95III_1 =
+			$('#myTabletoday tbody :nth-child(4) td:nth-child(2)')
+				.text()
+				.slice(1, -1) * 1000;
 	} catch (err) {
 		console.log(err);
 	}
