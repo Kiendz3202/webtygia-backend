@@ -424,7 +424,7 @@ const crawlSjc = async () => {
 	} catch (err) {
 		console.log(err.message);
 	}
-	console.log(dataJson);
+	// console.log(dataJson);
 	Sjc.findOneAndUpdate(
 		{ name: dataJson.name },
 		{
