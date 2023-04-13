@@ -12,11 +12,11 @@ const { delay } = require('../utils/promise/delay');
 module.exports = async function () {
 	console.log('run stock');
 	//*/10 9-14 * * 1-5
-	cron.schedule('*/15 * * * *', async () => {
+	cron.schedule('*/15 * * * 1-5', async () => {
 		updateAllListStocks();
 	});
 	//0 2,10,12,14,16 * * 1-5
-	cron.schedule('0 2,8,10,11,14,16,18 * * *', async () => {
+	cron.schedule('0 2,8,10,11,14,16,18 * * 1-5', async () => {
 		updateAllDetailStocks();
 	});
 	//0 4 * * 1-5
