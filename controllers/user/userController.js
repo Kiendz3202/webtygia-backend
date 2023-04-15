@@ -52,6 +52,49 @@ const getUserPopulate = async (req, res, next) => {
 	}
 };
 
+const getUserPopulatePagination = async (req, res, next) => {
+	try {
+		const email = req.params.email || '';
+		const populate = req.query.populate || '';
+
+		const perPage = req.query.per_page || 5;
+		const page = req.query.page || 1;
+
+		// if (!email) {
+		// 	throw new Error('user undefined');
+		// }
+
+		const allCoinLength = await User.find({ email })
+			.then((res) => res[0])
+			.then((res) => res[populate]?.length)
+			.catch((err) => console.log(err));
+		const countPage = Math.ceil(allCoinLength / perPage);
+
+		const user = await User.find({ email })
+			.select('-password')
+			.populate({
+				path: populate,
+				match: {},
+				options: {
+					skip: perPage * page - perPage,
+					limit: perPage,
+				},
+			});
+
+		if (!user) {
+			throw createError.NotFound('can not find data');
+		}
+
+		res.status(200).json({
+			status: 'ok',
+			data: user,
+			pages: countPage,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
 const getUser = async (req, res, next) => {
 	try {
 		const email = req.params.email || '';
@@ -397,6 +440,8 @@ const getRank2WithoutChartDefaultData = async (req, res, next) => {
 const getPreviewDataFollowOffline = async (req, res, next) => {
 	try {
 		const { arrIdNews, arrIdCoin, arrIdStock } = req.body;
+		// const perPage = req.query.per_page || 5
+		// const page = req.query.page || 1
 
 		const coinList = await Coin.find({
 			_id: {
@@ -463,6 +508,7 @@ const getPreviewDataFollowOffline = async (req, res, next) => {
 
 module.exports = {
 	getUserPopulate,
+	getUserPopulatePagination,
 	getUser,
 	getUserPopulateSymbolStock,
 	updateViewAndScore,

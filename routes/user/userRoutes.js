@@ -1,5 +1,6 @@
 const {
 	getUserPopulate,
+	getUserPopulatePagination,
 	getUser,
 	getUserPopulateSymbolStock,
 	updateViewAndScore,
@@ -13,6 +14,10 @@ const {
 
 module.exports = function (app, pathApi) {
 	app.get(`${pathApi}/user-populate/:email`, getUserPopulate);
+	app.get(
+		`${pathApi}/user-populate-pagination/:email`,
+		getUserPopulatePagination
+	);
 	app.get(`${pathApi}/user/:email`, getUser);
 	app.get(
 		`${pathApi}/user-populate-symbol-stock/:email`,

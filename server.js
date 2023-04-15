@@ -94,8 +94,10 @@ const {
 // UpsertAllChartUsdVietcombank();
 const {
 	upsertAllChartSjc,
+	updateSjcChart1y,
 } = require('./services/crawlingData/services/gold/index');
 // upsertAllChartSjc();
+// updateSjcChart1y();
 const {
 	upsertAllChartPetrolimex,
 } = require('./services/crawlingData/services/petrol/index');

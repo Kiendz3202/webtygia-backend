@@ -57,13 +57,13 @@ const updateSjcChart1y = async () => {
 		let date = new Date();
 		dataJson.timeUpdate = Math.floor(Date.now() / 1000);
 
-		dataJson.sjc1l10lBuy = $('#myTable tbody :nth-child(2) :nth-child(3)')
+		dataJson.sjc1l10lBuy = $('#myTable tbody :nth-child(1) :nth-child(3)')
 			.contents()
 			.first()
 			.text()
 			.slice(1, -1)
 			.replace(/\./g, '');
-		dataJson.sjc1l10lSell = $('#myTable tbody :nth-child(2) :nth-child(3)')
+		dataJson.sjc1l10lSell = $('#myTable tbody :nth-child(1) :nth-child(4)')
 			.contents()
 			.first()
 			.text()
