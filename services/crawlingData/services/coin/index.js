@@ -37,7 +37,7 @@ const startCrawlCoinListAndChart = async () => {
 		allCoinListUpdate = allCoinListUpdate.concat(coinListUpdate);
 	}
 
-	await delay(30000); //40000
+	await delay(120000); //40000
 	//remove and upsert when update Coin(when Coin is not empty)
 	if (initialCoin.length) {
 		const listCoinCurrent = await Coin.find({});
