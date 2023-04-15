@@ -32,6 +32,7 @@ const startCrawlCoinListAndChart = async () => {
 	const arr = [1, 2, 3, 4];
 	let allCoinListUpdate = [];
 	while (allCoinListUpdate.length < arr.length * 200 - 10) {
+		allCoinListUpdate = [];
 		for (const page of arr) {
 			const coinListUpdate = await crawlCoinList(200, page); //200 coins/ 1api call
 			await delay(30000);
