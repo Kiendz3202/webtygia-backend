@@ -26,7 +26,22 @@ const { getCoinListAPI } = require('../../configs/constants/coin');
 
 const startCrawlCoinListAndChart = async () => {
 	const initialCoin = await Coin.find({});
-	const initialCoinChart = await CoinChart1D.find({}, { nameId: 1, _id: 0 });
+	const initialCoinChart1D = await CoinChart1D.find(
+		{},
+		{ nameId: 1, _id: 0 }
+	);
+	const initialCoinChart90D = await CoinChart90D.find(
+		{},
+		{ nameId: 1, _id: 0 }
+	);
+	const initialCoinChartMax = await CoinChartMax.find(
+		{},
+		{ nameId: 1, _id: 0 }
+	);
+	const initialCoinDescription = await CoinDescription.find(
+		{},
+		{ nameId: 1, _id: 0 }
+	);
 
 	//crawl 200 coins * 4 = 800 coins
 	const arr = [1, 2, 3, 4];
@@ -40,19 +55,18 @@ const startCrawlCoinListAndChart = async () => {
 		}
 		await delay(120000);
 	}
-
-	await delay(120000); //40000
+	// await delay(120000); //40000
 	//remove and upsert when update Coin(when Coin is not empty)
 	if (initialCoin.length) {
 		const listCoinCurrent = await Coin.find({});
-		console.log(listCoinCurrent.length);
-		console.log(allCoinListUpdate.length);
+		// console.log(listCoinCurrent.length);
+		// console.log(allCoinListUpdate.length);
 
 		const coinNeedRemove = listCoinCurrent?.filter(
 			(coin) =>
 				!allCoinListUpdate?.find((item) => coin.nameId == item?.id)
 		);
-		console.log('coinlist need remove');
+		// console.log('coinlist need remove');
 		let countNeedRemove = 0;
 
 		for (const coin of coinNeedRemove) {
@@ -61,37 +75,51 @@ const startCrawlCoinListAndChart = async () => {
 			);
 			countNeedRemove++;
 		}
-		console.log(countNeedRemove);
-		console.log('end coinlist need remove');
+		// console.log(countNeedRemove);
+		// console.log('end coinlist need remove');
 	}
 
 	//remove coins in  CoinChart which dont exist in Coin when update(when CoinChart is not empty)
-	if (initialCoinChart.length != 0) {
+	if (initialCoinChart1D.length != 0) {
 		const arrCoinNew = await Coin.find({}, { nameId: 1, _id: 0 });
-		console.log(arrCoinNew.length);
+		// console.log(arrCoinNew.length);
 
-		const coinNeedRemove = initialCoinChart.filter(
+		const coinNeedRemoveCoinChart1D = initialCoinChart1D.filter(
+			(coin) => !arrCoinNew.find(({ nameId }) => coin.nameId == nameId)
+		);
+		const coinNeedRemoveCoinChart90D = initialCoinChart90D.filter(
+			(coin) => !arrCoinNew.find(({ nameId }) => coin.nameId == nameId)
+		);
+		const coinNeedRemoveCoinChartMax = initialCoinChartMax.filter(
+			(coin) => !arrCoinNew.find(({ nameId }) => coin.nameId == nameId)
+		);
+		const coinNeedRemoveCoinDescription = initialCoinDescription.filter(
 			(coin) => !arrCoinNew.find(({ nameId }) => coin.nameId == nameId)
 		);
 		console.log('coinchart need remove');
-		let countNeedRemove = 0;
-		coinNeedRemove.map((coin) => {
-			CoinDescription.deleteOne({ nameId: coin.nameId }).catch((err) =>
-				console.log(err.message)
-			);
+		// let countNeedRemove = 0;
+		coinNeedRemoveCoinChart1D.map((coin) => {
 			CoinChart1D.deleteOne({ nameId: coin.nameId }).catch((err) =>
 				console.log(err.message)
 			);
+		});
+		coinNeedRemoveCoinChart90D.map((coin) => {
 			CoinChart90D.deleteOne({ nameId: coin.nameId }).catch((err) =>
 				console.log(err.message)
 			);
+		});
+		coinNeedRemoveCoinChartMax.map((coin) => {
 			CoinChartMax.deleteOne({ nameId: coin.nameId }).catch((err) =>
 				console.log(err.message)
 			);
-			countNeedRemove++;
 		});
-		console.log(countNeedRemove);
-		console.log('end coinchart need remove');
+		coinNeedRemoveCoinDescription.map((coin) => {
+			CoinDescription.deleteOne({ nameId: coin.nameId }).catch((err) =>
+				console.log(err.message)
+			);
+		});
+		// console.log(countNeedRemove);
+		// console.log('end coinchart need remove');
 	}
 
 	const coinChartIsEmty = (await CoinChart1D.count()) ? false : true;
@@ -99,13 +127,11 @@ const startCrawlCoinListAndChart = async () => {
 
 	//update,add new datachart to CoinChart(when CoinChart is empty)
 	if (coinChartIsEmty) {
-		console.log('start coinChartIsEmty');
-		console.log(currentCoin.length);
+		// console.log('start coinChartIsEmty');
+		// console.log(currentCoin.length);
 
 		for (const coin of currentCoin) {
 			crawlCoinDescription(coin);
-			// await delay(30000);
-			// crawlCoinDescriptionTranslateToVN(coin);
 			await delay(30000);
 			crawlCoinChart90D(coin);
 			await delay(30000);
@@ -114,35 +140,75 @@ const startCrawlCoinListAndChart = async () => {
 			crawlCoinChart1D(coin);
 			await delay(30000);
 		}
-		console.log('end coinChartIsEmty');
+		// console.log('end coinChartIsEmty');
 	} else {
-		//update,add new datachart to CoinChart(when CoinChart is not empty)
-		const currentCoinChart = await CoinChart1D.find(
-			{},
-			{ symbol: 1, nameId: 1, _id: 0 }
+		//upsert,add new datachart to CoinChart(when CoinChart is not empty)
+		// const currentCoinChart = await CoinChart1D.find(
+		// 	{},
+		// 	{ symbol: 1, nameId: 1, _id: 0 }
+		// );
+
+		// const coinChartNeedupdate = currentCoin.filter(
+		// 	(coin) =>
+		// 		!currentCoinChart.find(({ nameId }) => coin.nameId == nameId)
+		// );
+		// console.log('coin need update');
+		// let countNeedUpdate = 0;
+
+		// for (const coin of coinChartNeedupdate) {
+		// 	countNeedUpdate++;
+		// 	crawlCoinDescription(coin);
+		// 	await delay(30000);
+		// 	crawlCoinDescriptionTranslateToVN(coin);
+		// 	crawlCoinChart90D(coin);
+		// 	await delay(30000);
+		// 	crawlCoinChartMax(coin);
+		// 	await delay(30000);
+		// 	crawlCoinChart1D(coin);
+		// 	await delay(30000);
+		// }
+		// console.log(countNeedUpdate);
+		// console.log('end coin need update');
+
+		//==================New code===================
+		const getCoinNewNeedUpsert = async (model) => {
+			const currentCoinChart = await model.find(
+				{},
+				{ symbol: 1, nameId: 1, _id: 0 }
+			);
+
+			const coinChartNeedupdate = currentCoin.filter(
+				(coin) =>
+					!currentCoinChart.find(
+						({ nameId }) => coin.nameId == nameId
+					)
+			);
+
+			return coinChartNeedupdate;
+		};
+		//
+		const coinChartNeedupdate1D = await getCoinNewNeedUpsert(CoinChart1D);
+		const coinChartNeedupdate90D = await getCoinNewNeedUpsert(CoinChart90D);
+		const coinChartNeedupdateMax = await getCoinNewNeedUpsert(CoinChartMax);
+		const coinChartNeedupdateDescription = await getCoinNewNeedUpsert(
+			CoinDescription
 		);
 
-		const coinChartNeedupdate = currentCoin.filter(
-			(coin) =>
-				!currentCoinChart.find(({ nameId }) => coin.nameId == nameId)
-		);
-		console.log('coin need update');
-		let countNeedUpdate = 0;
-
-		for (const coin of coinChartNeedupdate) {
-			countNeedUpdate++;
-			crawlCoinDescription(coin);
-			await delay(30000);
-			crawlCoinDescriptionTranslateToVN(coin);
-			crawlCoinChart90D(coin);
-			await delay(30000);
-			crawlCoinChartMax(coin);
-			await delay(30000);
+		for (const coin of coinChartNeedupdate1D) {
 			crawlCoinChart1D(coin);
 			await delay(30000);
 		}
-		console.log(countNeedUpdate);
-		console.log('end coin need update');
+		for (const coin of coinChartNeedupdate90D) {
+			crawlCoinChart90D(coin);
+			await delay(30000);
+		}
+		for (const coin of coinChartNeedupdateMax) {
+			crawlCoinChartMax(coin);
+			await delay(30000);
+		}
+		for (const coin of coinChartNeedupdateDescription) {
+			crawlCoinDescription(coin);
+		}
 	}
 };
 
@@ -220,7 +286,7 @@ const updateCoinListAndChartTimeframe5Minute = async () => {
 						' update chart coin 5 minute'
 				);
 			});
-		await delay(4000);
+		await delay(20000);
 	}
 	// }
 };
@@ -252,7 +318,7 @@ const updateCoinListAndChartTimeframe1Hour = async () => {
 						' update chart coin 1 hour'
 				);
 			});
-		await delay(4000);
+		await delay(20000);
 	}
 	// }
 };
@@ -284,7 +350,7 @@ const updateCoinListAndChartTimeframe1Day = async () => {
 						' crawl list coin'
 				);
 			});
-		await delay(4000);
+		await delay(20000);
 	}
 	// }
 };

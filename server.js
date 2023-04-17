@@ -56,8 +56,8 @@ app.get(
 
 		// return res.status(200).json({ token, user });
 		res.redirect(
-			`${process.env.URL_FE}/authentication/success?email=${user.email}&name=${user.name}&avatar=${user.avatar}&token=${token}&role=${user.role}`
-			// `http://localhost:3000/authentication/success?email=${user.email}&name=${user.name}&avatar=${user.avatar}&token=${token}&role=${user.role}`
+			// `${process.env.URL_FE}/authentication/success?email=${user.email}&name=${user.name}&avatar=${user.avatar}&token=${token}&role=${user.role}`
+			`http://localhost:3000/authentication/success?email=${user.email}&name=${user.name}&avatar=${user.avatar}&token=${token}&role=${user.role}`
 		);
 	}
 );
@@ -129,6 +129,10 @@ const {
 } = require('./services/crawlingData/services/coin/crawlCoinDescription');
 // crawlCoinDescription({ nameId: 'bitcoin' });
 const {
+	startCrawlCoinListAndChart,
+} = require('./services/crawlingData/services/coin/index');
+startCrawlCoinListAndChart();
+const {
 	updatePetrolimexChart1y,
 } = require('./services/crawlingData/services/petrol/index');
 // updatePetrolimexChart1y();
@@ -168,7 +172,7 @@ const {
 //=====================
 
 //====Send notification to react native app by expo===
-require('./services/notification/sendNotificationByExpo/sendNotificationByExpo');
+require('./services/notification/sendNotificationByExpo/sendNotificationByExpo')();
 //====================================================
 
 //================Routes====================

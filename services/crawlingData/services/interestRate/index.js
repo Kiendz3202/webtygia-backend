@@ -18,8 +18,8 @@ const interestRateRunAll = async () => {
 	await delay(10000);
 	crawlAgribankInterestRate();
 	await delay(10000);
-	crawlBidvInterestRate();
-	await delay(10000);
+	// crawlBidvInterestRate();
+	// await delay(10000);
 	crawlScbInterestRate();
 	await delay(10000);
 	crawlMbbankInterestRate();

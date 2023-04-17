@@ -345,6 +345,7 @@ const getUserFollowAndInterest = async (req, res, next) => {
 				.sort({ score: -1 })
 				.limit(15)
 				.populate('detail');
+			console.log(data);
 
 			if (data.length > 0) {
 				const categoryRank1 = data[0].category;
