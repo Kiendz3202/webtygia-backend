@@ -1,7 +1,7 @@
 const { Expo } = require('expo-server-sdk');
 
 module.exports = function (messages) {
-	console.log(messages);
+	// console.log(messages);
 	// // let somePushTokens = [
 	// // 	'ExponentPushToken[J-oJM5PL2IQmH5lEdQPWUM]',
 	// // 	'ExponentPushToken[ad4i2cOr5_6-8gpvE1edXF]',
