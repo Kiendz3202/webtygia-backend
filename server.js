@@ -78,9 +78,9 @@ app.use(passport.session());
 //=========Run script=============
 
 // Crawling data
-// require('./services/crawlingData/scripts/coin')();
-// require('./services/crawlingData/scripts/GoldPetrolExchangerateInterestRate')();
-// require('./services/crawlingData/scripts/stock')();
+require('./services/crawlingData/scripts/coin')();
+require('./services/crawlingData/scripts/GoldPetrolExchangerateInterestRate')();
+require('./services/crawlingData/scripts/stock')();
 
 // Update point for userinterest
 // require('./services/rankingUserInterest/script/index')();
