@@ -1,6 +1,6 @@
 const {
 	PetrolChangePriceNotification,
-} = require('./PetrolChangePriceNotification');
+} = require('./petrolChangePriceNotification');
 
 // const allTokenDevice = await TokenDevicePhone.find() chưa import TokenDevicePhone
 // const allTokenDevice = [
