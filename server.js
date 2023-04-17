@@ -172,7 +172,7 @@ const {
 //=====================
 
 //====Send notification to react native app by expo===
-require('./services/notification/scripts/listenAndSendNotification')();
+// require('./services/notification/scripts/listenAndSendNotification')();
 //====================================================
 
 //================Routes====================

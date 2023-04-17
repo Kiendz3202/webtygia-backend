@@ -75,12 +75,10 @@ const verifyEmail = async (req, res, next) => {
 	try {
 		const user = await User.findOne({ _id: req.params.id });
 		if (!user)
-			return res
-				.status(200)
-				.send({
-					status: 'fail',
-					message: 'Đăng ký không thành công. Vui lòng thử lại!',
-				});
+			return res.status(200).send({
+				status: 'fail',
+				message: 'Đăng ký không thành công. Vui lòng thử lại!',
+			});
 
 		const token = await TokenVerifyEmail.findOne({
 			userId: user._id,
@@ -88,12 +86,10 @@ const verifyEmail = async (req, res, next) => {
 		});
 
 		if (!token)
-			return res
-				.status(200)
-				.send({
-					status: 'fail',
-					message: 'Xác thực không thành công. Vui lòng thử lại!',
-				});
+			return res.status(200).send({
+				status: 'fail',
+				message: 'Xác thực không thành công. Vui lòng thử lại!',
+			});
 
 		await User.findOneAndUpdate({ _id: user._id }, { isVerified: true });
 		await token.remove();
@@ -342,7 +338,7 @@ const logout = async (req, res, next) => {
 const updateTokenDeviceLoginGoogle = async (req, res, next) => {
 	try {
 		const { email, tokenDevicePhone } = req.body;
-		console.log(req.body);
+		// console.log(req.body);
 
 		if (tokenDevicePhone && email) {
 			await TokenDevicePhone.findOneAndUpdate(
