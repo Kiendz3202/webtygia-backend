@@ -51,7 +51,9 @@ const startCrawlCoinListAndChart = async () => {
 		for (const page of arr) {
 			const coinListUpdate = await crawlCoinList(200, page); //200 coins/ 1api call
 			await delay(30000);
-			allCoinListUpdate = allCoinListUpdate.concat(coinListUpdate);
+			if (coinListUpdate.length > 0) {
+				allCoinListUpdate = allCoinListUpdate.concat(coinListUpdate);
+			}
 		}
 		await delay(120000);
 	}
@@ -62,21 +64,23 @@ const startCrawlCoinListAndChart = async () => {
 		// console.log(listCoinCurrent.length);
 		// console.log(allCoinListUpdate.length);
 
-		const coinNeedRemove = listCoinCurrent?.filter(
-			(coin) =>
-				!allCoinListUpdate?.find((item) => coin.nameId == item?.id)
-		);
-		// console.log('coinlist need remove');
-		let countNeedRemove = 0;
-
-		for (const coin of coinNeedRemove) {
-			await Coin.deleteOne({ nameId: coin.nameId }).catch((err) =>
-				console.log(err)
+		if (allCoinListUpdate.length > 790) {
+			const coinNeedRemove = listCoinCurrent?.filter(
+				(coin) =>
+					!allCoinListUpdate?.find((item) => coin.nameId == item?.id)
 			);
-			countNeedRemove++;
+			// console.log('coinlist need remove');
+			let countNeedRemove = 0;
+
+			for (const coin of coinNeedRemove) {
+				await Coin.deleteOne({ nameId: coin.nameId }).catch((err) =>
+					console.log(err)
+				);
+				countNeedRemove++;
+			}
+			// console.log(countNeedRemove);
+			// console.log('end coinlist need remove');
 		}
-		// console.log(countNeedRemove);
-		// console.log('end coinlist need remove');
 	}
 
 	//remove coins in  CoinChart which dont exist in Coin when update(when CoinChart is not empty)

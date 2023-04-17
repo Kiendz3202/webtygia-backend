@@ -78,9 +78,9 @@ app.use(passport.session());
 //=========Run script=============
 
 // Crawling data
-require('./services/crawlingData/scripts/coin')();
-require('./services/crawlingData/scripts/GoldPetrolExchangerateInterestRate')();
-require('./services/crawlingData/scripts/stock')();
+// require('./services/crawlingData/scripts/coin')();
+// require('./services/crawlingData/scripts/GoldPetrolExchangerateInterestRate')();
+// require('./services/crawlingData/scripts/stock')();
 
 // Update point for userinterest
 // require('./services/rankingUserInterest/script/index')();
@@ -168,7 +168,7 @@ const {
 // // updatePetrolimexChart1y();
 
 //=====listen price change  and notificate user=======
-// require('./services/notification/scripts/listenAndSendNotification')();
+require('./services/notification/scripts/listenAndSendNotification')();
 //=====================
 
 //====Send notification to react native app by expo===
