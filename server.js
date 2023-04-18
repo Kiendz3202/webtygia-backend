@@ -56,8 +56,8 @@ app.get(
 
 		// return res.status(200).json({ token, user });
 		res.redirect(
-			// `${process.env.URL_FE}/authentication/success?email=${user.email}&name=${user.name}&avatar=${user.avatar}&token=${token}&role=${user.role}`
-			`http://localhost:3000/authentication/success?email=${user.email}&name=${user.name}&avatar=${user.avatar}&token=${token}&role=${user.role}`
+			`${process.env.URL_FE}/authentication/success?email=${user.email}&name=${user.name}&avatar=${user.avatar}&token=${token}&role=${user.role}`
+			// `http://localhost:3000/authentication/success?email=${user.email}&name=${user.name}&avatar=${user.avatar}&token=${token}&role=${user.role}`
 		);
 	}
 );

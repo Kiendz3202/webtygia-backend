@@ -51,7 +51,7 @@ const startCrawlCoinListAndChart = async () => {
 		for (const page of arr) {
 			const coinListUpdate = await crawlCoinList(200, page); //200 coins/ 1api call
 			await delay(30000);
-			if (coinListUpdate.length > 0) {
+			if (coinListUpdate && coinListUpdate.length > 0) {
 				allCoinListUpdate = allCoinListUpdate.concat(coinListUpdate);
 			}
 		}

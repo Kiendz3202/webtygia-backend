@@ -37,6 +37,7 @@ module.exports = async function () {
 		const allTokenDevice = await TokenDevicePhone.find({}).catch((err) =>
 			console.log(err)
 		);
+
 		startListeningAndSendNotificationCoin(allTokenDevice);
 	});
 	cron.schedule('*/15 * * * *', async () => {
