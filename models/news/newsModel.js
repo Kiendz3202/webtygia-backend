@@ -7,10 +7,21 @@ const newsSchema = mongoose.Schema(
 		title: { type: String, require: true },
 		image: { type: String, require: true },
 		description: { type: String, require: true },
-		keyword: [String],
 		originSource: { type: String }, //link bài viết gốc
 		quotation: { type: String }, // trích dẫn
-		category: [String], // thể loại
+		category: {
+			type: String,
+			enum: [
+				'coin',
+				'stock',
+				'interestRate',
+				'exchangeRate',
+				'gold',
+				'petrol',
+				'others',
+			],
+			default: 'coin',
+		}, // thể loại
 		tag: [String],
 		nameAdminPost: { type: String, require: true },
 		avatarAdminPost: { type: String, require: true },

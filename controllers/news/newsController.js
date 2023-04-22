@@ -32,7 +32,7 @@ const getLatestPosts = async (req, res, next) => {
 		next(error);
 	}
 };
-
+//fix const allPost = await News.countDocuments({category})() thay vi find()
 const getPaginationPosts = async (req, res, next) => {
 	try {
 		const perPage = req.query.per_page || 25;
@@ -157,6 +157,45 @@ const getNewsFollowOffline = async (req, res, next) => {
 	}
 };
 
+const getPAginationPostsByCategory = async (req, res, next) => {
+	try {
+		const category = req.query.category;
+		const perPage = req.query.per_page || 25;
+		const page = req.query.page || 1;
+		if (
+			!(
+				Number.isInteger(parseFloat(perPage)) && parseFloat(perPage) > 0
+			) ||
+			!(Number.isInteger(parseFloat(page)) && parseFloat(page) > 0)
+		) {
+			throw createError.BadRequest(
+				'query per_page and page must be integer and larger than 0'
+			);
+		}
+		const allPost = await News.countDocuments({ category });
+		const allPostLength = allPost - 4;
+		const countPage = Math.ceil(allPostLength / perPage);
+
+		//-------------pagination by mongoose------------------------
+		const newsList = await News.find({ category })
+			.sort({ timeUpdate: -1 })
+			.skip(perPage * page - perPage)
+			.limit(perPage)
+			.select('-createdAt -updatedAt -__v');
+
+		if (!newsList) {
+			throw createError.NotFound('can not find data');
+		}
+
+		res.status(200).json({
+			status: 'ok',
+			data: { newsList, pages: countPage },
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
 module.exports = {
 	getAllPosts,
 	getLatestPosts,
@@ -165,4 +204,5 @@ module.exports = {
 	userFollowNews,
 	userUnfollowNews,
 	getNewsFollowOffline,
+	getPAginationPostsByCategory,
 };

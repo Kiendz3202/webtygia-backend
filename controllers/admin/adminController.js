@@ -10,7 +10,6 @@ const createPost = async (req, res, next) => {
 			title: req.body?.title,
 			timeUpdate: timestamp,
 			description: req.body?.description,
-			keyword: req.body?.keyword,
 			originSource: req.body?.originSource,
 			quotation: req.body?.quotation,
 			category: req.body?.category,
