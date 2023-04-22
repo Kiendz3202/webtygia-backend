@@ -18,5 +18,5 @@ module.exports = function (app, pathApi) {
 	app.post(`${pathApi}/follow-news`, verifyToken, userFollowNews);
 	app.post(`${pathApi}/unfollow-news`, verifyToken, userUnfollowNews);
 	app.post(`${pathApi}/news/news-follow-offline`, getNewsFollowOffline);
-	app.get(`${pathApi}/news/category`, getPAginationPostsByCategory);
+	app.get(`${pathApi}/get-list-news/category`, getPAginationPostsByCategory);
 };
