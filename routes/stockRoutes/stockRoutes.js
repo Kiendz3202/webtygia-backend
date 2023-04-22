@@ -39,6 +39,7 @@ const {
 	getStockReference,
 	getStockFollowOffline,
 } = require('../../controllers/stock/stockDetailController');
+const { verifyToken } = require('../../middlewares/auth/verifyToken');
 
 module.exports = function (app, pathApi) {
 	//===HNX30===
@@ -85,7 +86,11 @@ module.exports = function (app, pathApi) {
 
 	//=====Detail========
 	app.get(`${pathApi}/stock/:symbol`, detailStock);
-	app.post(`${pathApi}/stock/user-stock-reference`, getUserStockReference);
+	app.post(
+		`${pathApi}/stock/user-stock-reference`,
+		verifyToken,
+		getUserStockReference
+	);
 	app.get(`${pathApi}/stock/stock-reference/preview`, getStockReference);
 	//============
 

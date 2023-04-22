@@ -100,7 +100,7 @@ const startCrawlCoinListAndChart = async () => {
 		const coinNeedRemoveCoinDescription = initialCoinDescription.filter(
 			(coin) => !arrCoinNew.find(({ nameId }) => coin.nameId == nameId)
 		);
-		console.log('coinchart need remove');
+		// console.log('coinchart need remove');
 		// let countNeedRemove = 0;
 		coinNeedRemoveCoinChart1D.map((coin) => {
 			CoinChart1D.deleteOne({ nameId: coin.nameId }).catch((err) =>
@@ -197,7 +197,11 @@ const startCrawlCoinListAndChart = async () => {
 		const coinChartNeedupdateDescription = await getCoinNewNeedUpsert(
 			CoinDescription
 		);
-
+		// console.log('crawl new chart coin');
+		// console.log(coinChartNeedupdate1D.length);
+		// console.log(coinChartNeedupdate90D.length);
+		// console.log(coinChartNeedupdateMax.length);
+		// console.log(coinChartNeedupdateDescription.length);
 		for (const coin of coinChartNeedupdate1D) {
 			crawlCoinChart1D(coin);
 			await delay(30000);
@@ -213,6 +217,7 @@ const startCrawlCoinListAndChart = async () => {
 		for (const coin of coinChartNeedupdateDescription) {
 			crawlCoinDescription(coin);
 		}
+		// console.log('end');
 	}
 };
 

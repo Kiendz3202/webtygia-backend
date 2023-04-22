@@ -1,4 +1,5 @@
 const { createPost } = require('../../controllers/admin/adminController');
+const { verifyToken } = require('../../middlewares/auth/verifyToken');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -34,7 +35,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post(`/create-news`, upload.single('image'), createPost);
+app.post(`/create-news`, verifyToken, upload.single('image'), createPost);
 // app.get('/get-list-news', getPaginationPosts);
 // app.get('/get-all-news', getAllPosts);
 // app.get('/get-detail-news/:id', getDetailPost);

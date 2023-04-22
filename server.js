@@ -6,6 +6,8 @@ const env = require('dotenv');
 const helmet = require('helmet');
 const connectDB = require('./configs/database/db');
 const bodyParser = require('body-parser');
+const { apiLimiter } = require('./middlewares/request/limitRequest');
+const { allowFromDomain } = require('./middlewares/request/allowFromDomain');
 
 const app = express();
 env.config();
@@ -15,9 +17,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 // app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(cors({ origin: '*' }));
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' })); //sau deploy thì bỏ crosssite đi, dùng samesite
+
+//Middleware REQUEST(nào deploy product thì bật lên và sửa whitelist domain trong 2 middleware này)
+// app.use(apiLimiter); // limit request
+// app.use(allowFromDomain); // allow from just frontend domain
 
 //google auth
 const cookieSession = require('cookie-session');
@@ -75,12 +82,16 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+//cookie parser
+// const cookieParser = require('cookie-parser');
+// app.use(cookieParser());
+
 //=========Run script=============
 
 // Crawling data
-require('./services/crawlingData/scripts/coin')();
-require('./services/crawlingData/scripts/GoldPetrolExchangerateInterestRate')();
-require('./services/crawlingData/scripts/stock')();
+// require('./services/crawlingData/scripts/coin')();
+// require('./services/crawlingData/scripts/GoldPetrolExchangerateInterestRate')();
+// require('./services/crawlingData/scripts/stock')();
 
 // Update point for userinterest
 // require('./services/rankingUserInterest/script/index')();
@@ -131,7 +142,7 @@ const {
 const {
 	startCrawlCoinListAndChart,
 } = require('./services/crawlingData/services/coin/index');
-startCrawlCoinListAndChart();
+// startCrawlCoinListAndChart();
 const {
 	updatePetrolimexChart1y,
 } = require('./services/crawlingData/services/petrol/index');

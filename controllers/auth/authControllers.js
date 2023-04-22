@@ -171,19 +171,26 @@ const login = async (req, res, next) => {
 			const accessToken = await signAccessToken(user._id);
 			// const refreshtoken = await signRefreshToken(user._id);
 
-			res.status(200).json({
-				status: 'ok',
-				data: {
-					accessToken,
-					// refreshtoken,
-					user: {
-						_id: user._id,
-						name: user.name,
-						avatar: user.avatar,
-						email: user.email,
+			res
+				// .cookie('access_token', token, {
+				// 	httpOnly: true,
+				// 	// secure: process.env.NODE_ENV === 'production',
+				// 	secure: false,
+				// })
+				.status(200)
+				.json({
+					status: 'ok',
+					data: {
+						accessToken,
+						// refreshtoken,
+						user: {
+							_id: user._id,
+							name: user.name,
+							avatar: user.avatar,
+							email: user.email,
+						},
 					},
-				},
-			});
+				});
 		} else {
 			return res.status(200).json({
 				status: 'fail',
