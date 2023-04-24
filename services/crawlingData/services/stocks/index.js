@@ -37,38 +37,21 @@ const {
 
 const updateAllListStocks = async () => {
 	crawlHnx30();
-	// await delay(10000);
 	crawlVn30();
-	// await delay(10000);
 	crawlHnx();
-	// await delay(300000);
+	await delay(10000);
 	crawlHose();
-	// const hnxLength = await Hnx.find().count();
-	// const hnx30Length = await Hnx30.find().count();
-	// const vn30Length = await Vn30.find().count();
-	// const hoseLength = await Hose.find().count();
 };
 
 const updateAllDetailStocks = async () => {
 	//----Length of collection to caculate time delay each crawlingFunction executes
+	//chỉ cần crawl detail của hnx và hose vì nó bao gồm cả hnx30 và vn30
 	const hnxLength = await Hnx.find().count();
-	// const hnx30Length = await Hnx30.find().count();
-	// const vn30Length = await Vn30.find().count();
 	const hoseLength = await Hose.find().count();
 	// const upcomLength = await Upcom.find().count();
 
 	//---crawl detail information in particularly stock and update price to array in database to draw chart
 	console.log('start crawl detail stocks');
-
-	// if (hnx30Length !== 0) {
-	// 	crawlDetailHnx30();
-	// 	await delay(hnx30Length * 3500);
-	// }
-
-	// if (vn30Length !== 0) {
-	// 	crawlDetailVn30();
-	// 	await delay(vn30Length * 3500);
-	// }
 
 	if (hnxLength !== 0) {
 		crawlDetailHnx();
@@ -90,21 +73,10 @@ const updateAllDetailStocks = async () => {
 
 const updateAllChartStocks = async () => {
 	//----Length of collection to caculate time delay each crawlingFunction executes
+	//chỉ cần crawl chart của hnx và hose vì nó bao gồm cả hnx30 và vn30
 	const hnxLength = await Hnx.find().count();
-	// const hnx30Length = await Hnx30.find().count();
-	// const vn30Length = await Vn30.find().count();
 	const hoseLength = await Hose.find().count();
 	// const upcomLength = await Upcom.find().count();
-
-	// if (hnx30Length !== 0) {
-	// 	crawlChartHnx30();
-	// 	await delay(hnx30Length * 12000);
-	// }
-
-	// if (vn30Length !== 0) {
-	// 	crawlChartVn30();
-	// 	await delay(vn30Length * 12000);
-	// }
 
 	if (hnxLength !== 0) {
 		crawlChartHnx();
@@ -124,9 +96,8 @@ const updateAllChartStocks = async () => {
 
 const updateAllDescriptionStocks = async () => {
 	//----Length of collection to caculate time delay each crawlingFunction executes
+	//chỉ cần crawl description của hnx và hose vì nó bao gồm cả hnx30 và vn30
 	const hnx = await Hnx.find({}, { symbol: 1 });
-	// const hnx30 = await Hnx30.find({}, { symbol: 1 });
-	// const vn30 = await Vn30.find({}, { symbol: 1 });
 	const hose = await Hose.find({}, { symbol: 1 });
 	// const upcom = await Upcom.find({},{symbol:1});
 
@@ -134,18 +105,10 @@ const updateAllDescriptionStocks = async () => {
 		crawlStockDescription(stock.symbol);
 		await delay(2000);
 	}
-	// for (const stock of hnx30) {
-	// 	crawlStockDescription(stock.symbol);
-	// 	await delay(2000);
-	// }
 	for (const stock of hose) {
 		crawlStockDescription(stock.symbol);
 		await delay(2000);
 	}
-	// for (const stock of vn30) {
-	// 	crawlStockDescription(stock.symbol);
-	// 	await delay(2000);
-	// }
 	// for(const stock of upcom ){
 	// 	crawlStockDescription(stock.symbol)
 	// 	await delay(2000)
@@ -154,7 +117,7 @@ const updateAllDescriptionStocks = async () => {
 
 const pushNewPriceToStockChart6M = async () => {
 	let currentTime = Math.floor(Date.now() / 1000);
-	await delay(120000);
+	// await delay(120000);
 	const hnx = await Hnx.find(
 		{},
 		{ symbol: 1, currentPrice: 1, timeUpdate: 1, reference: 1 }
@@ -163,7 +126,7 @@ const pushNewPriceToStockChart6M = async () => {
 		stock.timeUpdate = currentTime;
 		await pushNewDataToStockChart(stock, StockChart6M, 4000);
 	}
-	await delay(300000);
+	// await delay(300000);
 	const hose = await Hose.find(
 		{},
 		{ symbol: 1, currentPrice: 1, timeUpdate: 1, reference: 1 }

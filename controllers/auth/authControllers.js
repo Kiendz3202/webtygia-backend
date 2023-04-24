@@ -57,7 +57,8 @@ const register = async (req, res, next) => {
 			token: crypto.randomBytes(32).toString('hex'),
 		}).save();
 		const url = `${process.env.URL_FE}/authentication/verify-token-email?userid=${user._id}&token=${token.token}`;
-		sendEmail(user.email, 'Xác thực Email', url);
+		// const url = `http://localhost:3000/authentication/verify-token-email?userid=${user._id}&token=${token.token}`;
+		await sendEmail(user.email, 'Xác thực Email', url);
 
 		// return res.status(200).json({
 		// 	status: 'ok',
@@ -74,6 +75,7 @@ const register = async (req, res, next) => {
 const verifyEmail = async (req, res, next) => {
 	try {
 		const user = await User.findOne({ _id: req.params.id });
+
 		if (!user)
 			return res.status(200).send({
 				status: 'fail',
@@ -172,10 +174,12 @@ const login = async (req, res, next) => {
 			// const refreshtoken = await signRefreshToken(user._id);
 
 			res
-				// .cookie('access_token', token, {
-				// 	httpOnly: true,
-				// 	// secure: process.env.NODE_ENV === 'production',
+				// .cookie('access_token', accessToken, {
 				// 	secure: false,
+				// 	sameSite: 'strict',
+				// 	path: '/api/v1/login',
+				// 	expires: new Date(new Date().getTime() + 1000000),
+				// 	httpOnly: true,
 				// })
 				.status(200)
 				.json({

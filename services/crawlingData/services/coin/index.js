@@ -43,7 +43,7 @@ const startCrawlCoinListAndChart = async () => {
 		{ nameId: 1, _id: 0 }
 	);
 
-	//crawl 200 coins * 4 = 800 coins
+	//crawl 200 coins * 4 = 800 coins(top 800 coin mới nhất)
 	const arr = [1, 2, 3, 4];
 	let allCoinListUpdate = [];
 	while (allCoinListUpdate.length < arr.length * 200 - 10) {
@@ -58,7 +58,7 @@ const startCrawlCoinListAndChart = async () => {
 		await delay(120000);
 	}
 	// await delay(120000); //40000
-	//remove and upsert when update Coin(when Coin is not empty)
+	//remove and upsert when update Coin(when Coin collection is not empty)
 	if (initialCoin.length) {
 		const listCoinCurrent = await Coin.find({});
 		// console.log(listCoinCurrent.length);
@@ -83,7 +83,7 @@ const startCrawlCoinListAndChart = async () => {
 		}
 	}
 
-	//remove coins in  CoinChart which dont exist in Coin when update(when CoinChart is not empty)
+	//remove coins in  CoinChart which dont exist in Coin when update(when CoinChart collection is not empty)
 	if (initialCoinChart1D.length != 0) {
 		const arrCoinNew = await Coin.find({}, { nameId: 1, _id: 0 });
 		// console.log(arrCoinNew.length);
@@ -129,7 +129,7 @@ const startCrawlCoinListAndChart = async () => {
 	const coinChartIsEmty = (await CoinChart1D.count()) ? false : true;
 	const currentCoin = await Coin.find({}, { symbol: 1, nameId: 1, _id: 0 });
 
-	//update,add new datachart to CoinChart(when CoinChart is empty)
+	//update,add new datachart to CoinChart(when CoinChart collection is empty)
 	if (coinChartIsEmty) {
 		// console.log('start coinChartIsEmty');
 		// console.log(currentCoin.length);
@@ -175,6 +175,7 @@ const startCrawlCoinListAndChart = async () => {
 		// console.log('end coin need update');
 
 		//==================New code===================
+		//upsert,add new datachart to CoinChart(when CoinChart collection is not empty)
 		const getCoinNewNeedUpsert = async (model) => {
 			const currentCoinChart = await model.find(
 				{},

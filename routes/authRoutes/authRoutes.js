@@ -40,7 +40,7 @@ const storage = multer.diskStorage({
 	},
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage, limits: 15 * 1024 * 1024 });
 
 app.post(`/register`, upload.single('avatar'), register);
 app.post(`/login`, upload.single('avatar'), login);

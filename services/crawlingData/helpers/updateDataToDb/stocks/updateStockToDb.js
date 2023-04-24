@@ -118,13 +118,6 @@ const pushNewDataToStockChart = async (stock, model, maxItemArray) => {
 	model
 		.findOneAndUpdate(
 			{ symbol: stock.symbol },
-			// {
-			// 	symbol: stock.symbol,
-			// 	$push: {
-			// 		t: stock.timeUpdate,
-			// 		price: stock.currentPrice || stock.reference,
-			// 	},
-			// }
 			{
 				symbol: stock.symbol,
 				$push: {

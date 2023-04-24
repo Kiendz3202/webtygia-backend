@@ -33,8 +33,10 @@ const { uploadErrorToDb } = require('../../utils/error/uploadErrorToDb');
 const crawlHnx = async () => {
 	let data = false;
 	let attemps = 0;
-	//retry request until it gets data or tries 3 times
+	//retry request until it gets data or tries 3 times(nếu crawl lỗi thì sẽ crawl lại, chạy tối đa 3 lần nếu vẫn lỗi sẽ bỏ qua)
+	//sàn HOSE và HNX sẽ crawl bằng pupperteer còn hn30 và vn30 sẽ crawl bằng cheerio
 	while (data == false && attemps < 2) {
+		//crawl bằng lib pupperteer, có thể lên đọc docs để hiểu hơn
 		data = await crawlDataByPuppeteerLazyLoading(URL_HNX, pageEvaluateFunc);
 		// console.log(data.length);
 		attemps++;
