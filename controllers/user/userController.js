@@ -64,10 +64,19 @@ const getUserPopulatePagination = async (req, res, next) => {
 		// 	throw new Error('user undefined');
 		// }
 
+		// const allCoinLength = await User.find({ email })
+		// 	.then((res) => res[0])
+		// 	.then((res) => res[populate]?.length)
+		// 	.catch((err) => console.log(err));
+
 		const allCoinLength = await User.find({ email })
-			.then((res) => res[0])
-			.then((res) => res[populate]?.length)
-			.catch((err) => console.log(err));
+			.select('-password')
+			.populate({
+				path: populate,
+				match: {},
+			})
+			.then((res) => res[0][populate]?.length);
+
 		const countPage = Math.ceil(allCoinLength / perPage);
 
 		const user = await User.find({ email })
@@ -80,6 +89,7 @@ const getUserPopulatePagination = async (req, res, next) => {
 					limit: perPage,
 				},
 			});
+		// console.log(user);
 
 		if (!user) {
 			throw createError.NotFound('can not find data');
